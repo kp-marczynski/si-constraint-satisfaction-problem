@@ -28,18 +28,20 @@ public abstract class AbstractBoard implements Board {
                 return false;
             }
 
-            if (getRow(i).stream().anyMatch(Field::hasNoValues) || getColumn(i).stream().anyMatch(Field::hasNoValues)) {
+            if (getRow(i).stream().filter(Objects::nonNull).anyMatch(Field::hasNoValues) || getColumn(i).stream().filter(Objects::nonNull).anyMatch(Field::hasNoValues)) {
                 return false;
             }
         }
-        return true;
+        return validateConstraints();
     }
 
-    private List<Field> getRow(int rowNum) {
+    public abstract boolean validateConstraints();
+
+    protected List<Field> getRow(int rowNum) {
         return Arrays.asList(board[rowNum]);
     }
 
-    private List<Field> getColumn(int colNum) {
+    protected List<Field> getColumn(int colNum) {
         List<Field> result = new ArrayList<>();
         for (Field[] fields : board) {
             result.add(fields[colNum]);

@@ -42,8 +42,8 @@ public class FutoshikiBoard extends AbstractBoard {
             while (line != null) {
                 String[] splittedLine = line.split(";");
                 if (splittedLine.length == 2) {
-                    FieldId smaller = new FieldId(splittedLine[0].charAt(0) - 'A', Integer.valueOf(splittedLine[0].substring(1)));
-                    FieldId bigger = new FieldId(splittedLine[1].charAt(0) - 'A', Integer.valueOf(splittedLine[1].substring(1)));
+                    FieldId smaller = new FieldId(splittedLine[0].charAt(0) - 'A', Integer.valueOf(splittedLine[0].substring(1)) - 1);
+                    FieldId bigger = new FieldId(splittedLine[1].charAt(0) - 'A', Integer.valueOf(splittedLine[1].substring(1)) - 1);
                     futoshikiBoard.constraints.add(new FutoshikiConstraint(smaller, bigger));
                 }
                 line = fileReader.readLine();
@@ -55,6 +55,24 @@ public class FutoshikiBoard extends AbstractBoard {
     }
 
     @Override
+    public boolean validateConstraints() {
+        for (FutoshikiConstraint constraint : constraints) {
+            FieldId smaller = constraint.getSmaller();
+            Field smallerField = this.board[smaller.getRowNum()][smaller.getColNum()];
+            FieldId bigger = constraint.getBigger();
+            Field biggerField = this.board[bigger.getRowNum()][bigger.getColNum()];
+            if (smallerField != null && biggerField != null) {
+                if (biggerField.hasOneValue() && smallerField.hasOneValue()) {
+                    if (biggerField.getSingleValue() < smallerField.getSingleValue()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(super.toString());
@@ -62,6 +80,7 @@ public class FutoshikiBoard extends AbstractBoard {
         for (FutoshikiConstraint constraint : constraints) {
             builder.append("\n").append(constraint);
         }
+        builder.append("\n\nisValid: ").append(validate());
         return builder.toString();
     }
 }

@@ -49,4 +49,15 @@ public class Field {
         possibleValues.removeAll(forbidenValues);
         return possibleValues.size() >= 1;
     }
+
+    @Override
+    public String toString() {
+        String result;
+        if (possibleValues.size() == 1) {
+            result = possibleValues.get(0).toString();
+        } else if (possibleValues.size() < 1) {
+            result = "!";
+        } else result = "0";
+        return String.format("%4s", result);
+    }
 }

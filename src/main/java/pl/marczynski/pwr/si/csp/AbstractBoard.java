@@ -10,7 +10,7 @@ public abstract class AbstractBoard implements Board {
     protected Field[][] board;
     protected static final String DATA_PATH = "./src/main/resources/test_data/";
 
-    AbstractBoard(int size) {
+    protected AbstractBoard(int size) {
         this.board = new Field[size][size];
     }
 

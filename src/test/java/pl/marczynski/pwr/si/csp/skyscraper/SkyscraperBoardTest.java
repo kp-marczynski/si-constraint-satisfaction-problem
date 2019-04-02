@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp;
+package pl.marczynski.pwr.si.csp.skyscraper;
 
 import org.junit.Test;
 

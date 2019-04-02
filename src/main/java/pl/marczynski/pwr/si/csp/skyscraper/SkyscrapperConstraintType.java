@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp;
+package pl.marczynski.pwr.si.csp.skyscraper;
 
 public enum SkyscrapperConstraintType {
     UP, DOWN, LEFT, RIGHT;

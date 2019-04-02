@@ -1,4 +1,7 @@
-package pl.marczynski.pwr.si.csp;
+package pl.marczynski.pwr.si.csp.skyscraper;
+
+import pl.marczynski.pwr.si.csp.AbstractBoard;
+import pl.marczynski.pwr.si.csp.Field;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

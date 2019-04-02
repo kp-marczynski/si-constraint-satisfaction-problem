@@ -1,4 +1,8 @@
-package pl.marczynski.pwr.si.csp;
+package pl.marczynski.pwr.si.csp.futoshiki;
+
+import pl.marczynski.pwr.si.csp.AbstractBoard;
+import pl.marczynski.pwr.si.csp.Field;
+import pl.marczynski.pwr.si.csp.FieldId;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

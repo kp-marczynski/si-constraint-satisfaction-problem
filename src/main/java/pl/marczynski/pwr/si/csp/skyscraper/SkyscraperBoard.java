@@ -65,7 +65,7 @@ public class SkyscraperBoard extends AbstractBoard {
             }
 
             fields = fields.stream().filter(Objects::nonNull).filter(Field::hasOneValue).collect(Collectors.toList());
-            if (fields.size() == this.board.length) {
+            if (fields.size() == getBoardSize()) {
                 int currentMax = 0;
                 int visible = 0;
                 for (Field field : fields) {

@@ -2,6 +2,8 @@ package pl.marczynski.pwr.si.csp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Field {
     private List<Integer> possibleValues;
@@ -45,7 +47,11 @@ public class Field {
         return this.possibleValues;
     }
 
-    public boolean removeForbidenValues(List<Integer> forbidenValues) {
+    public int getNumberOfPossibleValues() {
+        return possibleValues.size();
+    }
+
+    public boolean removeForbiddenValues(List<Integer> forbidenValues) {
         possibleValues.removeAll(forbidenValues);
         return possibleValues.size() >= 1;
     }

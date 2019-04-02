@@ -46,6 +46,10 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
+    private boolean removeForbidenValues(int rowNum, int colNum) {
+        return this.board[rowNum][colNum].removeForbidenValues(getForbidenValues(rowNum, colNum));
+    }
+
     private List<Integer> getForbidenValues(int rowNum, int colNum) {
         List<Field> row = getRow(rowNum);
         row.remove(colNum);

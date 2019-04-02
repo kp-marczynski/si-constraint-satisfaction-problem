@@ -5,27 +5,25 @@ import java.util.List;
 
 public class Field {
     private List<Integer> possibleValues;
+    private final FieldId fieldId;
 
-    private Field() {
+    private Field(FieldId fieldId) {
         this.possibleValues = new ArrayList<>();
+        this.fieldId = fieldId;
     }
 
-    public static Field createForSize(int size) {
-        Field result = new Field();
+    public static Field createForSize(FieldId fieldId, int size) {
+        Field result = new Field(fieldId);
         for (int i = 1; i <= size; i++) {
             result.possibleValues.add(i);
         }
         return result;
     }
 
-    public static Field createForSingleValue(int value) {
-        Field result = new Field();
+    public static Field createForSingleValue(FieldId fieldId, int value) {
+        Field result = new Field(fieldId);
         result.possibleValues.add(value);
         return result;
-    }
-
-    public int getNumberOfPossibleValues() {
-        return possibleValues.size();
     }
 
     public boolean hasOneValue() {
@@ -47,4 +45,8 @@ public class Field {
         return this.possibleValues;
     }
 
+    public boolean removeForbidenValues(List<Integer> forbidenValues) {
+        possibleValues.removeAll(forbidenValues);
+        return possibleValues.size() >= 1;
+    }
 }

@@ -32,7 +32,7 @@ public class Field {
 
     public Integer getSingleValue() {
         if (this.possibleValues.size() != 1) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Field does not have exactly one value");
         }
         return this.possibleValues.get(0);
     }

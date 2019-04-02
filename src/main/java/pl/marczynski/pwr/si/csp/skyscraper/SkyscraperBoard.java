@@ -30,7 +30,7 @@ public class SkyscraperBoard extends AbstractBoard {
             while (line != null) {
                 String[] splitedLine = line.split(";");
                 if (splitedLine.length != size + 1) {
-                    throw new IllegalStateException("Inccorect nuber of skyscraper constraints");
+                    throw new IllegalStateException("Incorrect number of skyscraper constraints");
                 }
                 SkyscraperConstraintType type = SkyscraperConstraintType.getFromString(splitedLine[0]);
                 for (int i = 1; i < splitedLine.length; i++) {

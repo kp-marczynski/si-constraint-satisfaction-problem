@@ -26,7 +26,7 @@ public class FutoshikiBoard extends AbstractBoard {
             futoshikiBoard = new FutoshikiBoard(size);
             line = fileReader.readLine();
             if (!line.contains("START")) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("START string was expected");
             }
             for (Integer rowNum = 0; rowNum < size; rowNum++) {
                 String row = fileReader.readLine();
@@ -40,7 +40,7 @@ public class FutoshikiBoard extends AbstractBoard {
             }
             line = fileReader.readLine();
             if (!line.contains("REL")) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("REL string was expected");
             }
             line = fileReader.readLine();
             while (line != null) {

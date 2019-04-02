@@ -21,6 +21,6 @@ class FutoshikiConstraint {
 
     @Override
     public String toString() {
-        return smaller + ";" + bigger;
+        return smaller + " < " + bigger;
     }
 }

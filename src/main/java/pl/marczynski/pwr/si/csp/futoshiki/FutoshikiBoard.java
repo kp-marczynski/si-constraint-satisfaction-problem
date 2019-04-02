@@ -77,14 +77,11 @@ public class FutoshikiBoard extends AbstractBoard {
     }
 
     @Override
-    public String toString() {
+    public String constraintsToString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(super.toString());
-        builder.append("\nRel:");
         for (FutoshikiConstraint constraint : constraints) {
             builder.append("\n").append(constraint);
         }
-        builder.append("\n\nisValid: ").append(validate());
         return builder.toString();
     }
 }

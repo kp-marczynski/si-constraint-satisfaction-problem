@@ -76,6 +76,8 @@ public abstract class AbstractBoard implements Board {
         return result.stream().distinct().collect(Collectors.toList());
     }
 
+    public abstract String constraintsToString();
+
     @Override
     public String toString() {
         int size = this.board.length;
@@ -90,6 +92,9 @@ public abstract class AbstractBoard implements Board {
             }
             builder.append("\n");
         }
+        builder.append("\nConst:");
+        builder.append(constraintsToString());
+        builder.append("\n\nisValid: ").append(validate());
         return builder.toString();
     }
 }

@@ -16,7 +16,7 @@ public class SkyscraperBoard extends AbstractBoard {
     private List<SkyscraperConstraint> constraints;
 
     public SkyscraperBoard(int size) {
-        super(size);
+        super(size, "skyscrapper");
         constraints = new ArrayList<>();
     }
 

@@ -1,9 +1,9 @@
 package pl.marczynski.pwr.si.csp.skyscraper;
 
-public enum SkyscrapperConstraintType {
+enum SkyscrapperConstraintType {
     UP, DOWN, LEFT, RIGHT;
 
-    public static SkyscrapperConstraintType getFromString(String type) {
+    static SkyscrapperConstraintType getFromString(String type) {
         switch (type) {
             case "G":
                 return UP;

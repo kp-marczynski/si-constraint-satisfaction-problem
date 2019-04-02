@@ -7,11 +7,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class AbstractBoard implements Board {
-    protected Field[][] board;
     protected static final String DATA_PATH = "./src/main/resources/test_data/";
 
-    protected AbstractBoard(int size) {
+    protected final Field[][] board;
+    private final String baseProblemName;
+
+    protected AbstractBoard(int size, String baseProblemName) {
         this.board = new Field[size][size];
+        this.baseProblemName = baseProblemName;
+    }
+
+    public List<String> getFilesNames() {
+        List<String> result = new ArrayList<>();
+        for (int i = 4; i <= 5; ++i) {
+            for (int j = 0; j <= 4; ++j) {
+                result.add(baseProblemName + "_" + i + "_" + j);
+            }
+        }
+        return result;
     }
 
     public boolean validate() {

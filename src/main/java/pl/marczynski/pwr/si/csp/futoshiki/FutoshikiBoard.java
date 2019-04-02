@@ -14,7 +14,7 @@ public class FutoshikiBoard extends AbstractBoard {
     private List<FutoshikiConstraint> constraints;
 
     public FutoshikiBoard(int size) {
-        super(size);
+        super(size, "futoshiki");
         constraints = new ArrayList<>();
     }
 

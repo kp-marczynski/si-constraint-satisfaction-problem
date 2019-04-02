@@ -1,25 +1,25 @@
 package pl.marczynski.pwr.si.csp.skyscraper;
 
-public class SkyscraperConstraint {
+class SkyscraperConstraint {
     private final SkyscrapperConstraintType type;
     private final int index;
     private final int visibleSkyScrappers;
 
-    public SkyscraperConstraint(SkyscrapperConstraintType type, int index, int visibleSkyScrappers) {
+    SkyscraperConstraint(SkyscrapperConstraintType type, int index, int visibleSkyScrappers) {
         this.type = type;
         this.index = index;
         this.visibleSkyScrappers = visibleSkyScrappers;
     }
 
-    public SkyscrapperConstraintType getType() {
+    SkyscrapperConstraintType getType() {
         return type;
     }
 
-    public int getIndex() {
+    int getIndex() {
         return index;
     }
 
-    public int getVisibleSkyScrappers() {
+    int getVisibleSkyScrappers() {
         return visibleSkyScrappers;
     }
 

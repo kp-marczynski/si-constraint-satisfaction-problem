@@ -32,7 +32,7 @@ public class SkyscraperBoard extends AbstractBoard {
                 if (splitedLine.length != size + 1) {
                     throw new IllegalStateException("Inccorect nuber of skyscraper constraints");
                 }
-                SkyscrapperConstraintType type = SkyscrapperConstraintType.getFromString(splitedLine[0]);
+                SkyscraperConstraintType type = SkyscraperConstraintType.getFromString(splitedLine[0]);
                 for (int i = 1; i < splitedLine.length; i++) {
                     if (!splitedLine[i].equals("0")) {
                         skyscraperBoard.constraints.add(new SkyscraperConstraint(type, i - 1, Integer.valueOf(splitedLine[i])));
@@ -52,20 +52,18 @@ public class SkyscraperBoard extends AbstractBoard {
         for (SkyscraperConstraint constraint : constraints) {
             switch (constraint.getType()) {
                 case UP:
-                    fields = getColumn(constraint.getIndex());
-                    break;
                 case DOWN:
                     fields = getColumn(constraint.getIndex());
-                    Collections.reverse(fields);
                     break;
                 case LEFT:
-                    fields = getRow(constraint.getIndex());
-                    break;
                 case RIGHT:
                     fields = getRow(constraint.getIndex());
-                    Collections.reverse(fields);
                     break;
             }
+            if (constraint.getType().hasReversedOrder()) {
+                Collections.reverse(fields);
+            }
+
             fields = fields.stream().filter(Objects::nonNull).filter(Field::hasOneValue).collect(Collectors.toList());
             if (fields.size() == this.board.length) {
                 int currentMax = 0;

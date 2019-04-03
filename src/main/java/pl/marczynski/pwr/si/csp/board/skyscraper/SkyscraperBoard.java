@@ -1,7 +1,8 @@
-package pl.marczynski.pwr.si.csp.skyscraper;
+package pl.marczynski.pwr.si.csp.board.skyscraper;
 
-import pl.marczynski.pwr.si.csp.AbstractBoard;
-import pl.marczynski.pwr.si.csp.Field;
+import pl.marczynski.pwr.si.csp.board.AbstractBoard;
+import pl.marczynski.pwr.si.csp.board.Board;
+import pl.marczynski.pwr.si.csp.board.Field;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,9 +16,19 @@ import java.util.stream.Collectors;
 public class SkyscraperBoard extends AbstractBoard {
     private List<SkyscraperConstraint> constraints;
 
-    public SkyscraperBoard(int size) {
-        super(size, "skyscrapper");
+    private SkyscraperBoard(int size) {
+        super(size);
         constraints = new ArrayList<>();
+    }
+
+    private SkyscraperBoard(SkyscraperBoard board) {
+        super(board.board);
+        this.constraints = board.constraints;
+    }
+
+    @Override
+    public Board copy() {
+        return new SkyscraperBoard(this);
     }
 
     public static SkyscraperBoard initializeFromFile(String fileName) {

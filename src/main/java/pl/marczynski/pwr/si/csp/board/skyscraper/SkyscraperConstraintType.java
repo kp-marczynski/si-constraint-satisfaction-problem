@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp.skyscraper;
+package pl.marczynski.pwr.si.csp.board.skyscraper;
 
 enum SkyscraperConstraintType {
     UP(false), DOWN(true), LEFT(false), RIGHT(true);

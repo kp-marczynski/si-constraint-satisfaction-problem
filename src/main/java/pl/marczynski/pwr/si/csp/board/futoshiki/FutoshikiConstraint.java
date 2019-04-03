@@ -1,6 +1,6 @@
-package pl.marczynski.pwr.si.csp.futoshiki;
+package pl.marczynski.pwr.si.csp.board.futoshiki;
 
-import pl.marczynski.pwr.si.csp.FieldId;
+import pl.marczynski.pwr.si.csp.board.FieldId;
 
 class FutoshikiConstraint {
     private final FieldId smaller;

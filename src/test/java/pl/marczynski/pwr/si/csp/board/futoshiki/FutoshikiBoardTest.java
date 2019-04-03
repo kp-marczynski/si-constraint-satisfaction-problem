@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp.futoshiki;
+package pl.marczynski.pwr.si.csp.board.futoshiki;
 
 import org.junit.Test;
 

@@ -1,8 +1,9 @@
-package pl.marczynski.pwr.si.csp.futoshiki;
+package pl.marczynski.pwr.si.csp.board.futoshiki;
 
-import pl.marczynski.pwr.si.csp.AbstractBoard;
-import pl.marczynski.pwr.si.csp.Field;
-import pl.marczynski.pwr.si.csp.FieldId;
+import pl.marczynski.pwr.si.csp.board.AbstractBoard;
+import pl.marczynski.pwr.si.csp.board.Board;
+import pl.marczynski.pwr.si.csp.board.Field;
+import pl.marczynski.pwr.si.csp.board.FieldId;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,9 +14,19 @@ import java.util.List;
 public class FutoshikiBoard extends AbstractBoard {
     private List<FutoshikiConstraint> constraints;
 
-    public FutoshikiBoard(int size) {
-        super(size, "futoshiki");
+    private FutoshikiBoard(int size) {
+        super(size);
         constraints = new ArrayList<>();
+    }
+
+    private FutoshikiBoard(FutoshikiBoard board) {
+        super(board.board);
+        this.constraints = board.constraints;
+    }
+
+    @Override
+    public Board copy() {
+        return new FutoshikiBoard(this);
     }
 
     public static FutoshikiBoard initializeFromFile(String fileName) {
@@ -77,7 +88,7 @@ public class FutoshikiBoard extends AbstractBoard {
     }
 
     @Override
-    public String constraintsToString() {
+    protected String constraintsToString() {
         StringBuilder builder = new StringBuilder();
         for (FutoshikiConstraint constraint : constraints) {
             builder.append("\n").append(constraint);

@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp;
+package pl.marczynski.pwr.si.csp.board;
 
 import javafx.util.Pair;
 
@@ -12,18 +12,44 @@ public abstract class AbstractBoard implements Board {
     protected static final String DATA_PATH = "./src/main/resources/test_data/";
 
     protected final Field[][] board;
-    private final String baseProblemName;
 
-    protected AbstractBoard(int size, String baseProblemName) {
+    protected AbstractBoard(int size) {
         this.board = new Field[size][size];
-        this.baseProblemName = baseProblemName;
+    }
+
+    protected AbstractBoard(Field[][] fields) {
+        int size = fields.length;
+        this.board = new Field[size][size];
+        for (int rowNum = 0; rowNum < size; rowNum++) {
+            for (int colNum = 0; colNum < size; colNum++) {
+                if (fields[rowNum][colNum] != null) {
+                    this.board[rowNum][colNum] = new Field(fields[rowNum][colNum]);
+                }
+            }
+        }
     }
 
     public int getBoardSize() {
         return this.board.length;
     }
 
-    private List<Integer> getAvailableValuesOnBoard() {
+    public abstract Board copy();
+
+    public boolean makeMove(FieldId fieldId, int value) {
+        Field field = this.board[fieldId.getRowNum()][fieldId.getColNum()];
+        if (field == null) {
+            this.board[fieldId.getRowNum()][fieldId.getColNum()] = Field.createForSingleValue(fieldId, value);
+            return true;
+        } else {
+            return field.setSingleValue(value);
+        }
+    }
+
+    public List<Integer> getPossibleValues(FieldId fieldId) {
+        return null; //todo
+    }
+
+    public List<Integer> getBoardDomain() {
         List<Integer> result = new ArrayList<>();
         for (int i = 1; i <= getBoardSize(); i++) {
             result.add(i);
@@ -40,16 +66,6 @@ public abstract class AbstractBoard implements Board {
                 }
             }
         }
-    }
-
-    public List<String> getFilesNames() {
-        List<String> result = new ArrayList<>();
-        for (int i = 4; i <= 5; ++i) {
-            for (int j = 0; j <= 4; ++j) {
-                result.add(baseProblemName + "_" + i + "_" + j);
-            }
-        }
-        return result;
     }
 
     public boolean validate() {
@@ -72,7 +88,20 @@ public abstract class AbstractBoard implements Board {
         return validateConstraints();
     }
 
-    public abstract boolean validateConstraints();
+    public boolean isGameOver() {
+        for (int rowNum = 0; rowNum < getBoardSize(); rowNum++) {
+            for (int colNum = 0; colNum < getBoardSize(); colNum++) {
+                if (this.board[rowNum][colNum] == null || !this.board[rowNum][colNum].hasOneValue()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    protected abstract boolean validateConstraints();
+
+    protected abstract String constraintsToString();
 
     protected List<Field> getRow(int rowNum) {
         return Arrays.asList(board[rowNum]);
@@ -86,7 +115,7 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
-    private boolean removeAllForbiddenValues() {
+    public boolean removeAllForbiddenValues() {
         boolean valuesChanged = true;
         boolean result = true;
         while (valuesChanged && result) {
@@ -125,8 +154,6 @@ public abstract class AbstractBoard implements Board {
         result.addAll(column.stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList()));
         return result.stream().distinct().collect(Collectors.toList());
     }
-
-    public abstract String constraintsToString();
 
     @Override
     public String toString() {

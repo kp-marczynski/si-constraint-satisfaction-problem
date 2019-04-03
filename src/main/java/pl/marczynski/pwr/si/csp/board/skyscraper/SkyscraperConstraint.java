@@ -1,4 +1,4 @@
-package pl.marczynski.pwr.si.csp.skyscraper;
+package pl.marczynski.pwr.si.csp.board.skyscraper;
 
 class SkyscraperConstraint {
     private final SkyscraperConstraintType type;

@@ -5,6 +5,7 @@ import pl.marczynski.pwr.si.csp.board.FieldId;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SolutionFinder {
@@ -34,6 +35,8 @@ public class SolutionFinder {
             this.currentRoot = heuristics.getNextField(this.board);
             if (this.currentRoot != null) {
                 this.valuesToCheck = this.board.getPossibleValues(this.currentRoot);
+            } else {
+                this.valuesToCheck = new ArrayList<>();
             }
         }
     }

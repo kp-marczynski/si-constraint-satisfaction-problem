@@ -3,6 +3,7 @@ package pl.marczynski.pwr.si.csp.board;
 import pl.marczynski.pwr.si.csp.board.futoshiki.FutoshikiBoard;
 import pl.marczynski.pwr.si.csp.board.skyscraper.SkyscraperBoard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Board {
@@ -27,6 +28,10 @@ public interface Board {
     void initializeNullsWithPossibleValues();
 
     Board copy();
+
+    List<Field> getRow(int rowNum);
+
+    List<Field> getColumn(int colNum);
 
     static Board initializeFromFile(String fileName) {
         if (fileName.contains("futo")) {

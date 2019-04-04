@@ -139,11 +139,11 @@ public abstract class AbstractBoard implements Board {
 
     protected abstract String constraintsToString();
 
-    protected List<Field> getRow(int rowNum) {
+    public List<Field> getRow(int rowNum) {
         return new ArrayList<>(board.get(rowNum));
     }
 
-    protected List<Field> getColumn(int colNum) {
+    public List<Field> getColumn(int colNum) {
         List<Field> result = new ArrayList<>();
         for (List<Field> fields : board) {
             result.add(fields.get(colNum));

@@ -3,7 +3,7 @@ package pl.marczynski.pwr.si.csp.game.solving_algorithm;
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
 
-public class ForwardCheckingAlgoritm implements SolvingAlgorithm {
+public class ForwardCheckingAlgorithm implements SolvingAlgorithm {
     @Override
     public Board initializeBoard(String fileName) {
         Board board = Board.initializeFromFile(fileName);

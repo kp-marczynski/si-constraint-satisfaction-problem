@@ -1,5 +1,6 @@
 package pl.marczynski.pwr.si.csp.game;
 
+import javafx.util.Pair;
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
@@ -14,11 +15,13 @@ public class SolutionFinder {
     private final SolvingAlgorithm solvingAlgorithm;
     private final Heuristics heuristics;
     private Board board;
+    private int moveCount;
 
     public SolutionFinder(SolvingAlgorithm solvingAlgorithm, Heuristics heuristics, String fileName) {
         this.solvingAlgorithm = solvingAlgorithm;
         this.heuristics = heuristics;
         this.board = solvingAlgorithm.initializeBoard(fileName);
+        this.moveCount = 0;
         initializeRoot();
     }
 
@@ -27,6 +30,7 @@ public class SolutionFinder {
         this.heuristics = parent.heuristics;
         this.board = parent.board.copy();
         solvingAlgorithm.makeMove(this.board, parent.currentRoot, parentRootValue);
+        this.moveCount = 1;
         initializeRoot();
     }
 
@@ -41,19 +45,20 @@ public class SolutionFinder {
         }
     }
 
-    public Board findSolution() {
+    public Pair<Board, Integer> findSolution() {
         if (!this.board.validate()) {
-            return null;
+            return new Pair<>(null, moveCount);
         } else if (this.board.isGameOver()) {
-            return this.board;
+            return new Pair(this.board, moveCount);
         } else {
             for (Integer value : valuesToCheck) {
-                Board solution = new SolutionFinder(this, value).findSolution();
-                if (solution != null) {
-                    return solution;
+                Pair<Board, Integer> solution = new SolutionFinder(this, value).findSolution();
+                this.moveCount += solution.getValue();
+                if (solution.getKey() != null) {
+                    return new Pair<>(solution.getKey(), moveCount);
                 }
             }
         }
-        return null;
+        return new Pair<>(null, moveCount);
     }
 }

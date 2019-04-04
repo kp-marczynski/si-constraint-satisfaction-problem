@@ -1,5 +1,6 @@
 package pl.marczynski.pwr.si.csp;
 
+import javafx.util.Pair;
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
 import pl.marczynski.pwr.si.csp.game.SolutionFinder;
@@ -7,7 +8,7 @@ import pl.marczynski.pwr.si.csp.game.heuristics.FifoHeuristics;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
 import pl.marczynski.pwr.si.csp.game.heuristics.IntensityHeuristics;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
-import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgoritm;
+import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgoritm());
+        List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
         List<String> futoshikiFiles = new ArrayList<>();
         List<String> skyscraperFiles = new ArrayList<>();
@@ -33,15 +34,16 @@ public class Main {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
                 for (Heuristics heuristic : heuristics) {
                     SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, fileName);
-                    System.out.print(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
+                    System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
 
                     long startTime = System.currentTimeMillis();
-                    Board solution = solutionFinder.findSolution();
+                    Pair<Board, Integer> solution = solutionFinder.findSolution();
                     long endTime = System.currentTimeMillis();
 
                     long elapsedTime = endTime - startTime;
-                    System.out.println(elapsedTime + " ms");
-                    System.out.println(solution);
+                    System.out.println("Time: " + elapsedTime + " ms");
+                    System.out.println("Moves: " + solution.getValue());
+                    System.out.println(solution.getKey());
                 }
             }
         }

@@ -4,8 +4,6 @@ import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.Field;
 import pl.marczynski.pwr.si.csp.board.FieldId;
 
-import java.util.Objects;
-
 public class IntensityHeuristics implements Heuristics {
     @Override
     public FieldId getNextField(Board board) {

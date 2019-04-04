@@ -29,11 +29,14 @@ public class IntensityHeuristics implements Heuristics {
                     }
                 } else {
                     numberOfPossibleValues = board.getPossibleValues(fieldId).size();
+                    if(numberOfPossibleValues < 1){
+                        isEligible = false;
+                    }
                 }
 
                 if (isEligible) {
-                    int currentIntensityIndex = (2 * boardSize - (rowElems + colElems)) * numberOfPossibleValues;
-                    if (intensityIndex == null || currentIntensityIndex < intensityIndex) {
+                    int currentIntensityIndex = (rowElems + colElems) / numberOfPossibleValues;
+                    if (intensityIndex == null || currentIntensityIndex > intensityIndex) {
                         intensityIndex = currentIntensityIndex;
                         selectedField = fieldId;
                     }

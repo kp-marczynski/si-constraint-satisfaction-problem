@@ -8,7 +8,6 @@ import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
 import pl.marczynski.pwr.si.csp.game.heuristics.IntensityHeuristics;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgoritm;
-import com.google.common.base.Stopwatch;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Stopwatch timer = Stopwatch.createUnstarted();
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgoritm());
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
         List<String> futoshikiFiles = new ArrayList<>();
@@ -31,16 +29,19 @@ public class Main {
         }
         List<String> fileNames = new ArrayList<>(futoshikiFiles);
         fileNames.addAll(skyscraperFiles);
-        for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
-            for (Heuristics heuristic : heuristics) {
-                for (String fileName : fileNames) {
-                    timer.start();
+        for (String fileName : fileNames) {
+            for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
+                for (Heuristics heuristic : heuristics) {
                     SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, fileName);
+                    System.out.print(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
+
+                    long startTime = System.currentTimeMillis();
                     Board solution = solutionFinder.findSolution();
+                    long endTime = System.currentTimeMillis();
+
+                    long elapsedTime = endTime - startTime;
+                    System.out.println(elapsedTime + " ms");
                     System.out.println(solution);
-                    timer.stop();
-                    System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": " + timer);
-                    timer.reset();
                 }
             }
         }

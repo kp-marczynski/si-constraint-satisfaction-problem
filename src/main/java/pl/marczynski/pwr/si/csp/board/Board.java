@@ -20,6 +20,10 @@ public interface Board {
 
     List<Integer> getBoardDomain();
 
+    Field getFieldForCoordinates(FieldId fieldId);
+
+    void setField(FieldId fieldId, Field field);
+
     void initializeNullsWithPossibleValues();
 
     Board copy();

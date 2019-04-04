@@ -22,7 +22,7 @@ public class SkyscraperBoard extends AbstractBoard {
     }
 
     private SkyscraperBoard(SkyscraperBoard board) {
-        super(board.board);
+        super(board);
         this.constraints = board.constraints;
     }
 

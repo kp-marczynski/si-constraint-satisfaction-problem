@@ -3,42 +3,59 @@ package pl.marczynski.pwr.si.csp.board;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class AbstractBoard implements Board {
-    protected static final String DATA_PATH = "./src/main/resources/test_data/";
+    protected static final String DATA_PATH = "./src/main/resources/";
 
-    protected final Field[][] board;
+    protected final List<List<Field>> board;
 
     protected AbstractBoard(int size) {
-        this.board = new Field[size][size];
+        this.board = createEmptyBoard(size);
     }
 
-    protected AbstractBoard(Field[][] fields) {
-        int size = fields.length;
-        this.board = new Field[size][size];
+    private List<List<Field>> createEmptyBoard(int size) {
+        List<List<Field>> result = new ArrayList<>();
+        for (int rowNum = 0; rowNum < size; rowNum++) {
+            List<Field> row = new ArrayList<>();
+            for (int colNum = 0; colNum < size; colNum++) {
+                row.add(colNum, null);
+            }
+            result.add(rowNum, row);
+        }
+        return result;
+    }
+
+    protected AbstractBoard(Board board) {
+        int size = board.getBoardSize();
+        this.board = createEmptyBoard(size);
         for (int rowNum = 0; rowNum < size; rowNum++) {
             for (int colNum = 0; colNum < size; colNum++) {
-                if (fields[rowNum][colNum] != null) {
-                    this.board[rowNum][colNum] = new Field(fields[rowNum][colNum]);
+                FieldId fieldId = new FieldId(rowNum, colNum);
+                Field field = board.getFieldForCoordinates(fieldId);
+                if (field != null) {
+                    setField(fieldId, new Field(field));
                 }
             }
         }
     }
 
+    public void setField(FieldId fieldId, Field field) {
+        this.board.get(fieldId.getRowNum()).set(fieldId.getColNum(), field);
+    }
+
     public int getBoardSize() {
-        return this.board.length;
+        return this.board.size();
     }
 
     public abstract Board copy();
 
     public boolean makeMove(FieldId fieldId, int value) {
-        Field field = this.board[fieldId.getRowNum()][fieldId.getColNum()];
+        Field field = getFieldForCoordinates(fieldId);
         if (field == null) {
-            this.board[fieldId.getRowNum()][fieldId.getColNum()] = Field.createForSingleValue(fieldId, value);
+            setField(fieldId, Field.createForSingleValue(fieldId, value));
             return true;
         } else {
             return field.setSingleValue(value);
@@ -46,7 +63,23 @@ public abstract class AbstractBoard implements Board {
     }
 
     public List<Integer> getPossibleValues(FieldId fieldId) {
-        return null; //todo
+        Field field = getFieldForCoordinates(fieldId);
+        if (field != null) {
+            if (field.getNumberOfPossibleValues() > 1) {
+                return new ArrayList<>(field.getPossibleValues());
+            } else {
+                return new ArrayList<>();
+            }
+        } else {
+            List<Integer> result = getBoardDomain();
+            result.removeAll(getForbiddenValues(fieldId));
+            return result;
+        }
+    }
+
+    @Override
+    public Field getFieldForCoordinates(FieldId fieldId) {
+        return this.board.get(fieldId.getRowNum()).get(fieldId.getColNum());
     }
 
     public List<Integer> getBoardDomain() {
@@ -60,9 +93,10 @@ public abstract class AbstractBoard implements Board {
     public void initializeNullsWithPossibleValues() {
         for (int rowNum = 0; rowNum < getBoardSize(); ++rowNum) {
             for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
-                if (this.board[rowNum][colNum] == null) {
-                    this.board[rowNum][colNum] = Field.createForSize(new FieldId(rowNum, colNum), getBoardSize());
-                    this.board[rowNum][colNum].removeForbiddenValues(getForbiddenValues(rowNum, colNum));
+                FieldId fieldId = new FieldId(rowNum, colNum);
+                if (getFieldForCoordinates(fieldId) == null) {
+                    setField(fieldId, Field.createForAvailableValues(fieldId, getPossibleValues(fieldId)));
+                    boolean dummy = true;
                 }
             }
         }
@@ -91,7 +125,9 @@ public abstract class AbstractBoard implements Board {
     public boolean isGameOver() {
         for (int rowNum = 0; rowNum < getBoardSize(); rowNum++) {
             for (int colNum = 0; colNum < getBoardSize(); colNum++) {
-                if (this.board[rowNum][colNum] == null || !this.board[rowNum][colNum].hasOneValue()) {
+                FieldId fieldId = new FieldId(rowNum, colNum);
+                Field field = getFieldForCoordinates(fieldId);
+                if (field == null || !field.hasOneValue()) {
                     return false;
                 }
             }
@@ -104,13 +140,13 @@ public abstract class AbstractBoard implements Board {
     protected abstract String constraintsToString();
 
     protected List<Field> getRow(int rowNum) {
-        return Arrays.asList(board[rowNum]);
+        return new ArrayList<>(board.get(rowNum));
     }
 
     protected List<Field> getColumn(int colNum) {
         List<Field> result = new ArrayList<>();
-        for (Field[] fields : board) {
-            result.add(fields[colNum]);
+        for (List<Field> fields : board) {
+            result.add(fields.get(colNum));
         }
         return result;
     }
@@ -122,8 +158,9 @@ public abstract class AbstractBoard implements Board {
             valuesChanged = false;
             for (int rowNum = 0; rowNum < getBoardSize(); ++rowNum) {
                 for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
-                    if (this.board[rowNum][colNum] != null) {
-                        Pair<Boolean, Boolean> removalResult = removeForbiddenValues(rowNum, colNum);
+                    FieldId fieldId = new FieldId(rowNum, colNum);
+                    if (getFieldForCoordinates(fieldId) != null) {
+                        Pair<Boolean, Boolean> removalResult = removeForbiddenValues(fieldId);
                         if (!removalResult.getKey()) {
                             result = false;
                         }
@@ -137,22 +174,24 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
-    private Pair<Boolean, Boolean> removeForbiddenValues(int rowNum, int colNum) {
-        int numberOfPossibleValues = this.board[rowNum][colNum].getNumberOfPossibleValues();
-        boolean result = this.board[rowNum][colNum].removeForbiddenValues(getForbiddenValues(rowNum, colNum));
-        int newNumberOfPossibleValues = this.board[rowNum][colNum].getNumberOfPossibleValues();
+    private Pair<Boolean, Boolean> removeForbiddenValues(FieldId fieldId) {
+        Field field = getFieldForCoordinates(fieldId);
+        int numberOfPossibleValues = field.getNumberOfPossibleValues();
+        boolean result = field.removeForbiddenValues(getForbiddenValues(fieldId));
+        int newNumberOfPossibleValues = field.getNumberOfPossibleValues();
         boolean possibleValuesChanged = numberOfPossibleValues != newNumberOfPossibleValues;
         return new Pair<>(result, possibleValuesChanged);
     }
 
-    private List<Integer> getForbiddenValues(int rowNum, int colNum) {
-        List<Field> row = getRow(rowNum);
-        row.remove(colNum);
+    private List<Integer> getForbiddenValues(FieldId fieldId) {
+        List<Field> row = getRow(fieldId.getRowNum());
+        row.set(fieldId.getColNum(), null);
         List<Integer> result = row.stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList());
-        List<Field> column = getColumn(colNum);
-        column.remove(rowNum);
+        List<Field> column = getColumn(fieldId.getColNum());
+        column.set(fieldId.getRowNum(), null);
         result.addAll(column.stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList()));
-        return result.stream().distinct().collect(Collectors.toList());
+        List<Integer> collect = result.stream().distinct().collect(Collectors.toList());
+        return collect;
     }
 
     @Override
@@ -160,8 +199,9 @@ public abstract class AbstractBoard implements Board {
         StringBuilder builder = new StringBuilder();
         for (int rowNum = 0; rowNum < getBoardSize(); ++rowNum) {
             for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
-                if (this.board[rowNum][colNum] != null) {
-                    builder.append(this.board[rowNum][colNum]);
+                Field field = getFieldForCoordinates(new FieldId(rowNum, colNum));
+                if (field != null) {
+                    builder.append(field);
                 } else {
                     builder.append(String.format("%4s", "0"));
                 }

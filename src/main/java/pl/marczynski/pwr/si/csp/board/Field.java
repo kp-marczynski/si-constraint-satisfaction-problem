@@ -25,6 +25,12 @@ public class Field {
         return result;
     }
 
+    public static Field createForAvailableValues(FieldId fieldId, List<Integer> possibleValues) {
+        Field result = new Field(fieldId);
+        result.possibleValues = new ArrayList<>(possibleValues);
+        return result;
+    }
+
     public static Field createForSingleValue(FieldId fieldId, int value) {
         Field result = new Field(fieldId);
         result.possibleValues.add(value);
@@ -66,6 +72,10 @@ public class Field {
     public boolean removeForbiddenValues(List<Integer> forbidenValues) {
         possibleValues.removeAll(forbidenValues);
         return possibleValues.size() >= 1;
+    }
+
+    public FieldId getFieldId() {
+        return fieldId;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class FutoshikiBoard extends AbstractBoard {
     }
 
     private FutoshikiBoard(FutoshikiBoard board) {
-        super(board.board);
+        super(board);
         this.constraints = board.constraints;
     }
 
@@ -45,7 +45,8 @@ public class FutoshikiBoard extends AbstractBoard {
                 for (int colNum = 0; colNum < splitedRow.length; colNum++) {
                     if (!splitedRow[colNum].equals("0")) {
                         int value = Integer.parseInt(splitedRow[colNum]);
-                        futoshikiBoard.board[rowNum][colNum] = Field.createForSingleValue(new FieldId(rowNum, colNum), value);
+                        FieldId fieldId = new FieldId(rowNum, colNum);
+                        futoshikiBoard.setField(fieldId, Field.createForSingleValue(fieldId, value));
                     }
                 }
             }
@@ -73,9 +74,9 @@ public class FutoshikiBoard extends AbstractBoard {
     public boolean validateConstraints() {
         for (FutoshikiConstraint constraint : constraints) {
             FieldId smaller = constraint.getSmaller();
-            Field smallerField = this.board[smaller.getRowNum()][smaller.getColNum()];
+            Field smallerField = getFieldForCoordinates(smaller);
             FieldId bigger = constraint.getBigger();
-            Field biggerField = this.board[bigger.getRowNum()][bigger.getColNum()];
+            Field biggerField = getFieldForCoordinates(bigger);
             if (smallerField != null && biggerField != null) {
                 if (biggerField.hasOneValue() && smallerField.hasOneValue()) {
                     if (biggerField.getSingleValue() < smallerField.getSingleValue()) {

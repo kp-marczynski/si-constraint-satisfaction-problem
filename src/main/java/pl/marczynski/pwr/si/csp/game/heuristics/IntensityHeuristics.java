@@ -13,9 +13,10 @@ public class IntensityHeuristics implements Heuristics {
         Integer intensityIndex = null;
         FieldId selectedField = null;
         for (int rowNum = 0; rowNum < boardSize; rowNum++) {
-            int rowElems = board.getRow(rowNum).stream().filter(Objects::nonNull).mapToInt(Field::getNumberOfPossibleValues).sum();
+            int rowElems = board.getRow(rowNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
+
             for (int colNum = 0; colNum < boardSize; colNum++) {
-                int colElems = board.getColumn(colNum).stream().filter(Objects::nonNull).mapToInt(Field::getNumberOfPossibleValues).sum();
+                int colElems = board.getColumn(colNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
 
                 FieldId fieldId = new FieldId(rowNum, colNum);
                 Field field = board.getFieldForCoordinates(fieldId);

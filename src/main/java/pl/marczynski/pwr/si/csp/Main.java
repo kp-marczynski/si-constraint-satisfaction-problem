@@ -41,7 +41,6 @@ public class Main {
                     timer.stop();
                     System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": " + timer);
                     timer.reset();
-//                    System.out.println("Method took: " + timer);
                 }
             }
         }

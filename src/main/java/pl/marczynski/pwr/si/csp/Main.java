@@ -11,29 +11,29 @@ import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
+    private static final String DATA_PATH = "./src/main/resources/";
+
     public static void main(String[] args) {
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
-        List<String> futoshikiFiles = new ArrayList<>();
-        List<String> skyscraperFiles = new ArrayList<>();
-        for (int i = 4; i <= 5; ++i) {
-            for (int j = 0; j <= 4; ++j) {
-                futoshikiFiles.add("test_data/futoshiki_" + i + "_" + j);
-                skyscraperFiles.add("test_data/skyscrapper_" + i + "_" + j);
-            }
-        }
-        List<String> fileNames = new ArrayList<>(futoshikiFiles);
-        fileNames.addAll(skyscraperFiles);
+        String directory = "test_data";
+        List<String> fileNames = getFilesInDirectory(directory);
         for (String fileName : fileNames) {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
                 for (Heuristics heuristic : heuristics) {
-                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, fileName);
+                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName);
                     System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
 
                     long startTime = System.currentTimeMillis();
@@ -62,5 +62,17 @@ public class Main {
             board.makeMove(new FieldId(row, col), val);
             System.out.println(board);
         }
+    }
+
+    private static List<String> getFilesInDirectory(String directory) {
+        List<String> result = new ArrayList<>();
+        try (Stream<Path> walk = Files.walk(Paths.get(DATA_PATH + "/" + directory))) {
+
+            result = walk.filter(Files::isRegularFile).map(Path::getFileName)
+                    .map(Path::toString).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

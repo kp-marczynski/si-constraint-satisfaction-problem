@@ -31,7 +31,7 @@ public class FutoshikiBoard extends AbstractBoard {
 
     public static FutoshikiBoard initializeFromFile(String fileName) {
         FutoshikiBoard futoshikiBoard = null;
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(DATA_PATH + fileName + ".txt"))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(DATA_PATH + fileName))) {
             String line = fileReader.readLine();
             Integer size = Integer.valueOf(line);
             futoshikiBoard = new FutoshikiBoard(size);

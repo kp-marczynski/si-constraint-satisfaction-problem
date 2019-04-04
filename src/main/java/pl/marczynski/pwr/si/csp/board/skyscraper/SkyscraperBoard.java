@@ -33,7 +33,7 @@ public class SkyscraperBoard extends AbstractBoard {
 
     public static SkyscraperBoard initializeFromFile(String fileName) {
         SkyscraperBoard skyscraperBoard = null;
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(DATA_PATH + fileName + ".txt"))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(DATA_PATH + fileName))) {
             String line = fileReader.readLine();
             Integer size = Integer.valueOf(line);
             skyscraperBoard = new SkyscraperBoard(size);

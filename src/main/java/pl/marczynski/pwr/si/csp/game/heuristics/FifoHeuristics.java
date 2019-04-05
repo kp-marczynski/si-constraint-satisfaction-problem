@@ -21,4 +21,9 @@ public class FifoHeuristics implements Heuristics {
         }
         return null;
     }
+
+    @Override
+    public String getHeuristicsName() {
+        return "fifoHeuristics";
+    }
 }

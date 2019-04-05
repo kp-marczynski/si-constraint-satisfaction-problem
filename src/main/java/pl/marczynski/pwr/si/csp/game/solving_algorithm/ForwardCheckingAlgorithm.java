@@ -17,4 +17,9 @@ public class ForwardCheckingAlgorithm implements SolvingAlgorithm {
         board.removeAllForbiddenValues();
         return board;
     }
+
+    @Override
+    public String getAlgorithmName() {
+        return "forwardChecking";
+    }
 }

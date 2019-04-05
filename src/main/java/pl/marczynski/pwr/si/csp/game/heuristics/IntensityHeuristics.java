@@ -44,4 +44,9 @@ public class IntensityHeuristics implements Heuristics {
         }
         return selectedField;
     }
+
+    @Override
+    public String getHeuristicsName() {
+        return "intensityHeuristics";
+    }
 }

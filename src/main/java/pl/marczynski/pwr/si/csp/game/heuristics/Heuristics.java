@@ -5,4 +5,5 @@ import pl.marczynski.pwr.si.csp.board.FieldId;
 
 public interface Heuristics {
     FieldId getNextField(Board board);
+    String getHeuristicsName();
 }

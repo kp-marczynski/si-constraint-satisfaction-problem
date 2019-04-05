@@ -25,27 +25,20 @@ public class Main {
 
     public static void main(String[] args) {
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
-        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
-        String directory = "test_data";
-        List<String> fileNames = getFilesInDirectory(directory);
-//        List<String> fileNames = Collections.singletonList("futoshiki_4_0.txt");
+        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics());
+        String directory = "research_data";
+//        List<String> fileNames = getFilesInDirectory(directory);
+        List<String> fileNames = Collections.singletonList("test_futo_4_0.txt");
+
+        List<SolutionCollection> allSolutions = new ArrayList<>();
         for (String fileName : fileNames) {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
                 for (Heuristics heuristic : heuristics) {
                     SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName);
-                    System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
 
-                    long startTime = System.currentTimeMillis();
                     SolutionCollection solutionCollection = solutionFinder.findSolution();
-                    long endTime = System.currentTimeMillis();
-                    List<Solution> solutions = solutionCollection.getSolutions();
-                    System.out.println(String.format("%30s", "Total number of solutions: ") + solutions.size());
-                    System.out.println(String.format("%30s","Moves for first: ") + solutions.get(0).getMoveCount());
-                    System.out.println(String.format("%30s","Total moves: ") + solutionCollection.getCurrrentMoveCount());
-
-                    double elapsedTime = ((double) (solutions.get(0).getEndTime() - startTime)) / 1000;
-                    System.out.println(String.format("%30s","Time for first: ") + elapsedTime + " s");
-                    System.out.println(String.format("%30s","Total end time: ") + ((double) (endTime - startTime)) / 1000 + " s");
+                    allSolutions.add(solutionCollection);
+                    System.out.println(solutionCollection);
                 }
             }
         }

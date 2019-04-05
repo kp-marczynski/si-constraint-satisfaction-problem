@@ -1,6 +1,5 @@
 package pl.marczynski.pwr.si.csp.game;
 
-import javafx.util.Pair;
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
@@ -15,14 +14,13 @@ public class SolutionFinder {
     private final SolvingAlgorithm solvingAlgorithm;
     private final Heuristics heuristics;
     private Board board;
-    //    private int moveCount;
     private final SolutionCollection solutionCollection;
 
     public SolutionFinder(SolvingAlgorithm solvingAlgorithm, Heuristics heuristics, String fileName) {
         this.solvingAlgorithm = solvingAlgorithm;
         this.heuristics = heuristics;
         this.board = solvingAlgorithm.initializeBoard(fileName);
-        this.solutionCollection = new SolutionCollection();
+        this.solutionCollection = new SolutionCollection(solvingAlgorithm.getAlgorithmName(), heuristics.getHeuristicsName(), fileName);
         initializeRoot();
     }
 
@@ -59,6 +57,7 @@ public class SolutionFinder {
                 new SolutionFinder(this, value).findSolution();
             }
         }
+        this.solutionCollection.setEndTime();
         return this.solutionCollection;
     }
 }

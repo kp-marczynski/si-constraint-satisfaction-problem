@@ -14,4 +14,9 @@ public class BacktrackingAlgorithm implements SolvingAlgorithm {
         board.makeMove(fieldId, value);
         return board;
     }
+
+    @Override
+    public String getAlgorithmName() {
+        return "backtracking";
+    }
 }

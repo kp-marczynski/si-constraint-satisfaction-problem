@@ -15,13 +15,14 @@ public class SolutionFinder {
     private final SolvingAlgorithm solvingAlgorithm;
     private final Heuristics heuristics;
     private Board board;
-    private int moveCount;
+    //    private int moveCount;
+    private final SolutionCollection solutionCollection;
 
     public SolutionFinder(SolvingAlgorithm solvingAlgorithm, Heuristics heuristics, String fileName) {
         this.solvingAlgorithm = solvingAlgorithm;
         this.heuristics = heuristics;
         this.board = solvingAlgorithm.initializeBoard(fileName);
-        this.moveCount = 0;
+        this.solutionCollection = new SolutionCollection();
         initializeRoot();
     }
 
@@ -29,8 +30,10 @@ public class SolutionFinder {
         this.solvingAlgorithm = parent.solvingAlgorithm;
         this.heuristics = parent.heuristics;
         this.board = parent.board.copy();
+        this.solutionCollection = parent.solutionCollection;
+
         solvingAlgorithm.makeMove(this.board, parent.currentRoot, parentRootValue);
-        this.moveCount = 1;
+        this.solutionCollection.increaseMoveCount();
         initializeRoot();
     }
 
@@ -45,20 +48,17 @@ public class SolutionFinder {
         }
     }
 
-    public Pair<Board, Integer> findSolution() {
+    public SolutionCollection findSolution() {
         if (!this.board.validate()) {
-            return new Pair<>(null, moveCount);
+            return this.solutionCollection;
         } else if (this.board.isGameOver()) {
-            return new Pair(this.board, moveCount);
+            this.solutionCollection.addSolution(new Solution(this.board, solutionCollection.getCurrrentMoveCount(), System.currentTimeMillis()));
+            return this.solutionCollection;
         } else {
             for (Integer value : valuesToCheck) {
-                Pair<Board, Integer> solution = new SolutionFinder(this, value).findSolution();
-                this.moveCount += solution.getValue();
-                if (solution.getKey() != null) {
-                    return new Pair<>(solution.getKey(), moveCount);
-                }
+                new SolutionFinder(this, value).findSolution();
             }
         }
-        return new Pair<>(null, moveCount);
+        return this.solutionCollection;
     }
 }

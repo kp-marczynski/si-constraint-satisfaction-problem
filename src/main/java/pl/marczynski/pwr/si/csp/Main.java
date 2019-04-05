@@ -1,8 +1,9 @@
 package pl.marczynski.pwr.si.csp;
 
-import javafx.util.Pair;
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
+import pl.marczynski.pwr.si.csp.game.Solution;
+import pl.marczynski.pwr.si.csp.game.SolutionCollection;
 import pl.marczynski.pwr.si.csp.game.SolutionFinder;
 import pl.marczynski.pwr.si.csp.game.heuristics.FifoHeuristics;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
@@ -15,10 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +28,7 @@ public class Main {
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
         String directory = "test_data";
         List<String> fileNames = getFilesInDirectory(directory);
+//        List<String> fileNames = Collections.singletonList("futoshiki_4_0.txt");
         for (String fileName : fileNames) {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
                 for (Heuristics heuristic : heuristics) {
@@ -37,13 +36,16 @@ public class Main {
                     System.out.println(solvingAlgorithm.getClass().getSimpleName() + ": " + heuristic.getClass().getSimpleName() + ": " + fileName + ": ");
 
                     long startTime = System.currentTimeMillis();
-                    Pair<Board, Integer> solution = solutionFinder.findSolution();
+                    SolutionCollection solutionCollection = solutionFinder.findSolution();
                     long endTime = System.currentTimeMillis();
+                    List<Solution> solutions = solutionCollection.getSolutions();
+                    System.out.println(String.format("%30s", "Total number of solutions: ") + solutions.size());
+                    System.out.println(String.format("%30s","Moves for first: ") + solutions.get(0).getMoveCount());
+                    System.out.println(String.format("%30s","Total moves: ") + solutionCollection.getCurrrentMoveCount());
 
-                    long elapsedTime = endTime - startTime;
-                    System.out.println("Time: " + elapsedTime + " ms");
-                    System.out.println("Moves: " + solution.getValue());
-                    System.out.println(solution.getKey());
+                    double elapsedTime = ((double) (solutions.get(0).getEndTime() - startTime)) / 1000;
+                    System.out.println(String.format("%30s","Time for first: ") + elapsedTime + " s");
+                    System.out.println(String.format("%30s","Total end time: ") + ((double) (endTime - startTime)) / 1000 + " s");
                 }
             }
         }

@@ -96,7 +96,6 @@ public abstract class AbstractBoard implements Board {
                 FieldId fieldId = new FieldId(rowNum, colNum);
                 if (getFieldForCoordinates(fieldId) == null) {
                     setField(fieldId, Field.createForAvailableValues(fieldId, getPossibleValues(fieldId)));
-                    boolean dummy = true;
                 }
             }
         }

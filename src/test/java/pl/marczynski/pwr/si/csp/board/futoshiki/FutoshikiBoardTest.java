@@ -22,7 +22,7 @@ public class FutoshikiBoardTest {
     @Test
     public void shouldInitializeFutoshikiBoard() {
         //given
-        String fileName = "futoshiki_5_3";
+        String fileName = "test_data/futoshiki_5_3.txt";
 
         //when
         FutoshikiBoard futoshikiBoard = FutoshikiBoard.initializeFromFile(fileName);

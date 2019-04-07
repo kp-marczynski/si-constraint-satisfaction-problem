@@ -6,7 +6,7 @@ public class SkyscraperBoardTest {
     @Test
     public void shouldInitializeFutoshikiBoard() {
         //given
-        String fileName = "skyscrapper_5_3";
+        String fileName = "test_data/skyscrapper_5_3.txt";
 
         //when
         SkyscraperBoard skyscraperBoard = SkyscraperBoard.initializeFromFile(fileName);

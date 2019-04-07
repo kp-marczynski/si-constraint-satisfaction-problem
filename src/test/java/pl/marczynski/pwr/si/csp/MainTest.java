@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MainTest {
-    
+
     @Test
     public void evaluateTestData() {
         String directory = "test_data";

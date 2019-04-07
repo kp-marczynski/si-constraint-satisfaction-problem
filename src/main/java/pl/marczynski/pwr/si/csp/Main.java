@@ -6,6 +6,7 @@ import pl.marczynski.pwr.si.csp.game.SolutionCollection;
 import pl.marczynski.pwr.si.csp.game.SolutionFinder;
 import pl.marczynski.pwr.si.csp.game.heuristics.FifoHeuristics;
 import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
+import pl.marczynski.pwr.si.csp.game.heuristics.IntensityHeuristics;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
@@ -45,7 +46,7 @@ public class Main {
 
     static List<SolutionCollection> findSolutionsforFiles(String directory, List<String> fileNames) {
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
-        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics());
+        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
 
         List<SolutionCollection> allSolutions = new ArrayList<>();
         for (String fileName : fileNames) {

@@ -2,46 +2,31 @@ package pl.marczynski.pwr.si.csp;
 
 import pl.marczynski.pwr.si.csp.board.Board;
 import pl.marczynski.pwr.si.csp.board.FieldId;
-import pl.marczynski.pwr.si.csp.game.Solution;
-import pl.marczynski.pwr.si.csp.game.SolutionCollection;
-import pl.marczynski.pwr.si.csp.game.SolutionFinder;
-import pl.marczynski.pwr.si.csp.game.heuristics.FifoHeuristics;
-import pl.marczynski.pwr.si.csp.game.heuristics.Heuristics;
-import pl.marczynski.pwr.si.csp.game.heuristics.IntensityHeuristics;
-import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
-import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgorithm;
-import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Scanner;
 
 public class Main {
-    private static final String DATA_PATH = "./src/main/resources/";
+
 
     public static void main(String[] args) {
-        List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
-        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics());
-        String directory = "research_data";
-//        List<String> fileNames = getFilesInDirectory(directory);
-        List<String> fileNames = Collections.singletonList("test_futo_4_0.txt");
-
-        List<SolutionCollection> allSolutions = new ArrayList<>();
-        for (String fileName : fileNames) {
-            for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
-                for (Heuristics heuristic : heuristics) {
-                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName);
-
-                    SolutionCollection solutionCollection = solutionFinder.findSolution();
-                    allSolutions.add(solutionCollection);
-                    System.out.println(solutionCollection);
-                }
-            }
-        }
+//        List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
+//        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics());
+//        String directory = "research_data";
+////        List<String> fileNames = getFilesInDirectory(directory);
+//        List<String> fileNames = Collections.singletonList("test_futo_4_0.txt");
+//
+//        List<SolutionCollection> allSolutions = new ArrayList<>();
+//        for (String fileName : fileNames) {
+//            for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
+//                for (Heuristics heuristic : heuristics) {
+//                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName);
+//
+//                    SolutionCollection solutionCollection = solutionFinder.findSolution();
+//                    allSolutions.add(solutionCollection);
+//                    System.out.println(solutionCollection);
+//                }
+//            }
+//        }
     }
 
     public static void manualRun() {
@@ -57,17 +42,5 @@ public class Main {
             board.makeMove(new FieldId(row, col), val);
             System.out.println(board);
         }
-    }
-
-    private static List<String> getFilesInDirectory(String directory) {
-        List<String> result = new ArrayList<>();
-        try (Stream<Path> walk = Files.walk(Paths.get(DATA_PATH + "/" + directory))) {
-
-            result = walk.filter(Files::isRegularFile).map(Path::getFileName)
-                    .map(Path::toString).collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 }

@@ -48,7 +48,7 @@ public class SolutionFinder {
 
     public SolutionCollection findSolution() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - this.solutionCollection.getStartTimestamp() > 3e5) {
+        if (currentTime - this.solutionCollection.getStartTimestamp() > 18e5) {
             return this.solutionCollection;
         }
         if (!this.board.validate()) {

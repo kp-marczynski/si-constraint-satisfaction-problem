@@ -43,7 +43,11 @@ public class SolutionCollection {
     }
 
     public double getTimeForFirst() {
-        return ((double) solutions.get(0).getEndTime() - startTimestamp) / 1000;
+        if (solutions.size() > 0) {
+            return ((double) solutions.get(0).getEndTime() - startTimestamp) / 1000;
+        } else {
+            return 0.0;
+        }
     }
 
     public void setEndTime() {
@@ -66,18 +70,25 @@ public class SolutionCollection {
         return startTimestamp;
     }
 
+    private int getMoveCountForFirst() {
+        if (solutions.size() > 0) {
+            return solutions.get(0).getMoveCount();
+        } else {
+            return 0;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(algorithmName).append(": ").append(heuristicsName).append(": ").append(fileName).append("\n");
+
+        builder.append(String.format("%30s", "Total number of solutions: ")).append(solutions.size()).append("\n");
         if (solutions.size() > 0) {
-            builder.append(String.format("%30s", "Total number of solutions: ")).append(solutions.size()).append("\n")
-                    .append(String.format("%30s", "Moves for first: ")).append(solutions.get(0).getMoveCount()).append("\n")
+            builder.append(String.format("%30s", "Moves for first: ")).append(getMoveCountForFirst()).append("\n")
                     .append(String.format("%30s", "Total moves: ")).append(currentMoveCount).append("\n")
                     .append(String.format("%30s", "Time for first: ")).append(getTimeForFirst()).append(" s").append("\n")
                     .append(String.format("%30s", "Total end time: ")).append(getTotalTime()).append(" s");
-        } else {
-            builder.append("Solutions not found");
         }
         return builder.toString();
     }

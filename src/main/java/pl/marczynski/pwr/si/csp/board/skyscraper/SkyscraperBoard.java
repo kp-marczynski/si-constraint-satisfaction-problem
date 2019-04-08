@@ -7,11 +7,9 @@ import pl.marczynski.pwr.si.csp.board.Field;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SkyscraperBoard extends AbstractBoard {
     private List<SkyscraperConstraint> constraints;
@@ -54,7 +52,32 @@ public class SkyscraperBoard extends AbstractBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (!skyscraperBoard.checkParsedConstraints()) {
+            throw new IllegalStateException("File contains wrong constraints");
+        }
         return skyscraperBoard;
+    }
+
+    private boolean checkParsedConstraints() {
+        List<SkyscraperConstraint> ups = constraints.stream().filter(cons -> cons.getType().equals(SkyscraperConstraintType.UP)).collect(Collectors.toList());
+        List<SkyscraperConstraint> downs = constraints.stream().filter(cons -> cons.getType().equals(SkyscraperConstraintType.DOWN)).collect(Collectors.toList());
+        List<SkyscraperConstraint> lefts = constraints.stream().filter(cons -> cons.getType().equals(SkyscraperConstraintType.LEFT)).collect(Collectors.toList());
+        List<SkyscraperConstraint> rights = constraints.stream().filter(cons -> cons.getType().equals(SkyscraperConstraintType.RIGHT)).collect(Collectors.toList());
+
+        return checkParsedConstraints(ups, downs) && checkParsedConstraints(lefts, rights);
+    }
+
+    private boolean checkParsedConstraints(List<SkyscraperConstraint> oneSide, List<SkyscraperConstraint> otherSide) {
+        for (SkyscraperConstraint one : oneSide) {
+            Optional<SkyscraperConstraint> optionalOther = otherSide.stream().filter(other -> other.getIndex() == one.getIndex()).findAny();
+            if (optionalOther.isPresent()) {
+                int sum = optionalOther.get().getVisibleSkyScrappers() + one.getVisibleSkyScrappers();
+                if (sum > getBoardSize() + 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

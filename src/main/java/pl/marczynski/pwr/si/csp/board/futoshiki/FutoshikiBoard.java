@@ -67,8 +67,31 @@ public class FutoshikiBoard extends AbstractBoard {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (!futoshikiBoard.checkParsedConstraints()) {
+            throw new IllegalStateException("File contains wrong constraints");
+        }
         return futoshikiBoard;
     }
+
+    private boolean checkParsedConstraints() {
+        if (constraints.stream().anyMatch(constraint -> constraint.getSmaller().equals(constraint.getBigger()))) {
+            return false;
+        }
+        for (int i = 0; i < constraints.size(); i++) {
+            for (int j = 0; j < constraints.size(); j++) {
+                if (i != j) {
+                    FutoshikiConstraint first = constraints.get(i);
+                    FutoshikiConstraint second = constraints.get(j);
+                    if ((first.getSmaller().equals(second.getSmaller()) && first.getBigger().equals(second.getBigger()))
+                            || (first.getSmaller().equals(second.getBigger()) && first.getBigger().equals(second.getSmaller()))) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 
     @Override
     public boolean validateConstraints() {

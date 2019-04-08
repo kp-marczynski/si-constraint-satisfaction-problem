@@ -30,9 +30,38 @@ public class Main {
         if (args.length >= 3) {
             timeout = Integer.valueOf(args[2]);
         }
-        List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames, timeout);
+        List<SolvingAlgorithm> solvingAlgorithms = null;
+        List<Heuristics> heuristics = null;
+        if (args.length >= 5) {
+            switch (args[3]) {
+                case "1":
+                    solvingAlgorithms = Collections.singletonList(new BacktrackingAlgorithm());
+                    break;
+                case "2":
+                    solvingAlgorithms = Collections.singletonList(new ForwardCheckingAlgorithm());
+                    break;
+                default:
+                    break;
+            }
+
+            switch (args[4]) {
+                case "1":
+                    heuristics = Collections.singletonList(new FifoHeuristics());
+                    break;
+                case "2":
+                    heuristics = Collections.singletonList(new IntensityHeuristics());
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (solvingAlgorithms == null || heuristics == null) {
+            solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
+            heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
+        }
+        List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames, timeout, solvingAlgorithms, heuristics);
         System.out.println(getCsvString(solutionsForFiles));
-        if (solutionsForFiles.stream().anyMatch(solution -> solution.isTimeoutExceeded())) {
+        if (solutionsForFiles.stream().anyMatch(SolutionCollection::isTimeoutExceeded)) {
             throw new TimeoutException();
         }
     }
@@ -68,10 +97,7 @@ public class Main {
         }
     }
 
-    static List<SolutionCollection> findSolutionsForFiles(String directory, List<String> fileNames, Integer timeout) {
-        List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
-        List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
-
+    static List<SolutionCollection> findSolutionsForFiles(String directory, List<String> fileNames, Integer timeout, List<SolvingAlgorithm> solvingAlgorithms, List<Heuristics> heuristics) {
         List<SolutionCollection> allSolutions = new ArrayList<>();
         for (String fileName : fileNames) {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {

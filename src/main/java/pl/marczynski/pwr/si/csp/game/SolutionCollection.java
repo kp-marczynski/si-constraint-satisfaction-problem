@@ -26,7 +26,7 @@ public class SolutionCollection {
         this.solutions.add(solution);
     }
 
-    public int getCurrrentMoveCount() {
+    public int getCurrentMoveCount() {
         return currentMoveCount;
     }
 
@@ -70,7 +70,7 @@ public class SolutionCollection {
         return startTimestamp;
     }
 
-    private int getMoveCountForFirst() {
+    public int getMoveCountForFirst() {
         if (solutions.size() > 0) {
             return solutions.get(0).getMoveCount();
         } else {
@@ -89,5 +89,9 @@ public class SolutionCollection {
                 .append(String.format("%30s", "Total end time: ")).append(getTotalTime()).append(" s");
 
         return builder.toString();
+    }
+
+    public int getNumberOfSolutions() {
+        return solutions.size();
     }
 }

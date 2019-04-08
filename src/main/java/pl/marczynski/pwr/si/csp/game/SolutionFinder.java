@@ -54,7 +54,7 @@ public class SolutionFinder {
         if (!this.board.validate()) {
             return this.solutionCollection;
         } else if (this.board.isGameOver()) {
-            this.solutionCollection.addSolution(new Solution(this.board, solutionCollection.getCurrrentMoveCount(), currentTime));
+            this.solutionCollection.addSolution(new Solution(this.board, solutionCollection.getCurrentMoveCount(), currentTime));
             return this.solutionCollection;
         } else {
             for (Integer value : valuesToCheck) {

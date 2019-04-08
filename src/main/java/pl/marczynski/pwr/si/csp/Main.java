@@ -25,7 +25,24 @@ public class Main {
     public static void main(String[] args) {
         String directory = args[0];
         List<String> fileNames = Collections.singletonList(args[1]);
-        findSolutionsforFiles(directory, fileNames);
+        List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames);
+        System.out.println(getCsvString(solutionsForFiles));
+    }
+
+    public static String getCsvString(List<SolutionCollection> solutions) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("File name,Solving Algorithm,Heuristics,Total number of solutions,Moves for first,Total moves,Time for first,Total end time\n");
+        for (SolutionCollection solutionCollection : solutions) {
+            builder.append(solutionCollection.getFileName()).append(",")
+                    .append(solutionCollection.getAlgorithmName()).append(",")
+                    .append(solutionCollection.getHeuristicsName()).append(",")
+                    .append(solutionCollection.getNumberOfSolutions()).append(",")
+                    .append(solutionCollection.getMoveCountForFirst()).append(",")
+                    .append(solutionCollection.getCurrentMoveCount()).append(",")
+                    .append(solutionCollection.getTimeForFirst()).append(",")
+                    .append(solutionCollection.getTotalTime()).append("\n");
+        }
+        return builder.toString();
     }
 
     public static void manualRun() {
@@ -43,7 +60,7 @@ public class Main {
         }
     }
 
-    static List<SolutionCollection> findSolutionsforFiles(String directory, List<String> fileNames) {
+    static List<SolutionCollection> findSolutionsForFiles(String directory, List<String> fileNames) {
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
 

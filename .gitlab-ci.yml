@@ -11,6 +11,11 @@ image: gradle:alpine
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
+stages:
+  - build
+  - basic-test
+  - extended-test
+
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 

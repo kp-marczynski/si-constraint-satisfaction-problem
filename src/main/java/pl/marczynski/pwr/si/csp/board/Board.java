@@ -14,7 +14,7 @@ public interface Board {
 
     boolean makeMove(FieldId fieldId, int value);
 
-    boolean removeAllForbiddenValues();
+    void removeAllForbiddenValues();
 
     int getBoardSize();
 

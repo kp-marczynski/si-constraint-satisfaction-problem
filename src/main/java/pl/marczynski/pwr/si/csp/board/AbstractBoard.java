@@ -9,9 +9,26 @@ public abstract class AbstractBoard implements Board {
     protected static final String DATA_PATH = "./src/main/resources/";
 
     protected final List<List<Field>> board;
+    protected final List<FieldId> changedFields;
 
     protected AbstractBoard(int size) {
         this.board = createEmptyBoard(size);
+        changedFields = new ArrayList<>();
+    }
+
+    protected AbstractBoard(Board board) {
+        int size = board.getBoardSize();
+        changedFields = new ArrayList<>();
+        this.board = createEmptyBoard(size);
+        for (int rowNum = 0; rowNum < size; rowNum++) {
+            for (int colNum = 0; colNum < size; colNum++) {
+                FieldId fieldId = new FieldId(rowNum, colNum);
+                Field field = board.getFieldForCoordinates(fieldId);
+                if (field != null) {
+                    setField(fieldId, new Field(field));
+                }
+            }
+        }
     }
 
     private List<List<Field>> createEmptyBoard(int size) {
@@ -26,20 +43,6 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
-    protected AbstractBoard(Board board) {
-        int size = board.getBoardSize();
-        this.board = createEmptyBoard(size);
-        for (int rowNum = 0; rowNum < size; rowNum++) {
-            for (int colNum = 0; colNum < size; colNum++) {
-                FieldId fieldId = new FieldId(rowNum, colNum);
-                Field field = board.getFieldForCoordinates(fieldId);
-                if (field != null) {
-                    setField(fieldId, new Field(field));
-                }
-            }
-        }
-    }
-
     public void setField(FieldId fieldId, Field field) {
         this.board.get(fieldId.getRowNum()).set(fieldId.getColNum(), field);
     }
@@ -52,6 +55,7 @@ public abstract class AbstractBoard implements Board {
 
     public boolean makeMove(FieldId fieldId, int value) {
         Field field = getFieldForCoordinates(fieldId);
+        this.changedFields.add(fieldId);
         if (field == null) {
             setField(fieldId, Field.createForSingleValue(fieldId, value));
             return true;
@@ -88,16 +92,16 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
-    public void initializeNullsWithPossibleValues() {
-        for (int rowNum = 0; rowNum < getBoardSize(); ++rowNum) {
-            for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
-                FieldId fieldId = new FieldId(rowNum, colNum);
-                if (getFieldForCoordinates(fieldId) == null) {
-                    setField(fieldId, Field.createForAvailableValues(fieldId, getPossibleValues(fieldId)));
-                }
-            }
-        }
-    }
+//    public void initializeNullsWithPossibleValues() {
+//        for (int rowNum = 0; rowNum < getBoardSize(); ++rowNum) {
+//            for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
+//                FieldId fieldId = new FieldId(rowNum, colNum);
+//                if (getFieldForCoordinates(fieldId) == null) {
+//                    setField(fieldId, Field.createForAvailableValues(fieldId, getPossibleValues(fieldId)));
+//                }
+//            }
+//        }
+//    }
 
     public boolean validate() {
         for (int i = 0; i < getBoardSize(); i++) {
@@ -148,7 +152,7 @@ public abstract class AbstractBoard implements Board {
         return result;
     }
 
-    public boolean removeAllForbiddenValues() {
+    public void removeAllForbiddenValues() {
         boolean valuesChanged = true;
         boolean result = true;
         while (valuesChanged && result) {
@@ -157,29 +161,27 @@ public abstract class AbstractBoard implements Board {
                 for (int colNum = 0; colNum < getBoardSize(); ++colNum) {
                     FieldId fieldId = new FieldId(rowNum, colNum);
                     if (getFieldForCoordinates(fieldId) != null) {
-                        Pair<Boolean, Boolean> removalResult = removeForbiddenValues(fieldId);
-                        if (!removalResult.getKey()) {
-                            result = false;
-                        }
-                        if (removalResult.getValue()) {
-                            valuesChanged = true;
+                        List<Integer> possibleValues = getPossibleValues(fieldId);
+                        if (possibleValues.size() == 1) {
+                            setField(fieldId, Field.createForSingleValue(fieldId, possibleValues.get(0)));
+                            this.changedFields.add(fieldId);
+                            result = true;
                         }
                     }
                 }
             }
         }
-        return result;
     }
 
-    private Pair<Boolean, Boolean> removeForbiddenValues(FieldId fieldId) {
-        Field field = getFieldForCoordinates(fieldId);
-        int numberOfPossibleValues = field.getNumberOfPossibleValues();
-        boolean result = field.removeForbiddenValues(getForbiddenValues(fieldId));
-        int newNumberOfPossibleValues = field.getNumberOfPossibleValues();
-        boolean possibleValuesChanged = numberOfPossibleValues != newNumberOfPossibleValues;
-        return new Pair<>(result, possibleValuesChanged);
-    }
-
+    //    private Pair<Boolean, Boolean> removeForbiddenValues(FieldId fieldId) {
+//        Field field = getFieldForCoordinates(fieldId);
+//        int numberOfPossibleValues = field.getNumberOfPossibleValues();
+//        boolean result = field.removeForbiddenValues(getForbiddenValues(fieldId));
+//        int newNumberOfPossibleValues = field.getNumberOfPossibleValues();
+//        boolean possibleValuesChanged = numberOfPossibleValues != newNumberOfPossibleValues;
+//        return new Pair<>(result, possibleValuesChanged);
+//    }
+//
     private List<Integer> getForbiddenValues(FieldId fieldId) {
         List<Field> row = getRow(fieldId.getRowNum());
         row.set(fieldId.getColNum(), null);

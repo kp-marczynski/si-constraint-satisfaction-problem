@@ -7,7 +7,7 @@ public class ForwardCheckingAlgorithm implements SolvingAlgorithm {
     @Override
     public Board initializeBoard(String fileName) {
         Board board = Board.initializeFromFile(fileName);
-        board.initializeNullsWithPossibleValues();
+//        board.initializeNullsWithPossibleValues();
         return board;
     }
 

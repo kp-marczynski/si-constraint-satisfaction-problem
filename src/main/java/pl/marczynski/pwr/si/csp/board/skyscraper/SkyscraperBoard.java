@@ -75,12 +75,12 @@ public class SkyscraperBoard extends AbstractBoard {
                 Collections.reverse(fields);
             }
 
-            fields = fields.stream().filter(Objects::nonNull).filter(Field::hasOneValue).collect(Collectors.toList());
+            fields = fields.stream().filter(Objects::nonNull).collect(Collectors.toList());
             if (fields.size() == getBoardSize()) {
                 int currentMax = 0;
                 int visible = 0;
                 for (Field field : fields) {
-                    Integer singleValue = field.getSingleValue();
+                    Integer singleValue = field.getValue();
                     if (singleValue > currentMax) {
                         currentMax = singleValue;
                         ++visible;

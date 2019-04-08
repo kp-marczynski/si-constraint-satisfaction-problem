@@ -47,14 +47,22 @@ public class SolutionFinder {
     }
 
     public SolutionCollection findSolution() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - this.solutionCollection.getStartTimestamp() > 3e5) {
+            return this.solutionCollection;
+        }
         if (!this.board.validate()) {
             return this.solutionCollection;
         } else if (this.board.isGameOver()) {
-            this.solutionCollection.addSolution(new Solution(this.board, solutionCollection.getCurrrentMoveCount(), System.currentTimeMillis()));
+            this.solutionCollection.addSolution(new Solution(this.board, solutionCollection.getCurrrentMoveCount(), currentTime));
             return this.solutionCollection;
         } else {
             for (Integer value : valuesToCheck) {
-                new SolutionFinder(this, value).findSolution();
+                SolutionFinder child = new SolutionFinder(this, value);
+                child.findSolution();
+                for (FieldId changedField : child.board.getChangedFields()) {
+                    this.board.setField(changedField, null);
+                }
             }
         }
         this.solutionCollection.setEndTime();

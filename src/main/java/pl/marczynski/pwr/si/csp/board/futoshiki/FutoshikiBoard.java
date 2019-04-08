@@ -78,10 +78,8 @@ public class FutoshikiBoard extends AbstractBoard {
             FieldId bigger = constraint.getBigger();
             Field biggerField = getFieldForCoordinates(bigger);
             if (smallerField != null && biggerField != null) {
-                if (biggerField.hasOneValue() && smallerField.hasOneValue()) {
-                    if (biggerField.getSingleValue() < smallerField.getSingleValue()) {
-                        return false;
-                    }
+                if (biggerField.getValue() < smallerField.getValue()) {
+                    return false;
                 }
             }
         }

@@ -25,7 +25,7 @@ public class Main {
     public static void main(String[] args) {
         String directory = "research_data";
 //        List<String> fileNames = getFilesInDirectory(directory);
-        List<String> fileNames = Collections.singletonList("test_futo_4_0.txt");
+        List<String> fileNames = Collections.singletonList("test_futo_9_0.txt");
         findSolutionsforFiles(directory, fileNames);
     }
 

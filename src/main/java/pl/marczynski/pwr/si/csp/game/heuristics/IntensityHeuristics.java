@@ -11,32 +11,26 @@ public class IntensityHeuristics implements Heuristics {
         Integer intensityIndex = null;
         FieldId selectedField = null;
         for (int rowNum = 0; rowNum < boardSize; rowNum++) {
-            int rowElems = board.getRow(rowNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
+//            int rowElems = board.getRow(rowNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
 
             for (int colNum = 0; colNum < boardSize; colNum++) {
-                int colElems = board.getColumn(colNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
+//                int colElems = board.getColumn(colNum).stream().mapToInt(field -> field == null ? 1 : field.getNumberOfPossibleValues()).sum();
 
                 FieldId fieldId = new FieldId(rowNum, colNum);
                 Field field = board.getFieldForCoordinates(fieldId);
 
-                int numberOfPossibleValues;
-                boolean isEligible = true;
-                if (field != null) {
-                    numberOfPossibleValues = field.getNumberOfPossibleValues();
-                    if (numberOfPossibleValues <= 1) {
-                        isEligible = false;
-                    }
-                } else {
+                int numberOfPossibleValues = 0;
+                boolean isEligible = false;
+                if (field == null) {
                     numberOfPossibleValues = board.getPossibleValues(fieldId).size();
-                    if (numberOfPossibleValues < 1) {
-                        isEligible = false;
+                    if (numberOfPossibleValues > 0) {
+                        isEligible = true;
                     }
                 }
 
                 if (isEligible) {
-                    int currentIntensityIndex = (rowElems + colElems) / numberOfPossibleValues; //minimizing choice & maximizing system response
-                    if (intensityIndex == null || currentIntensityIndex > intensityIndex) {
-                        intensityIndex = currentIntensityIndex;
+                    if (intensityIndex == null || numberOfPossibleValues < intensityIndex) {
+                        intensityIndex = numberOfPossibleValues;
                         selectedField = fieldId;
                     }
                 }

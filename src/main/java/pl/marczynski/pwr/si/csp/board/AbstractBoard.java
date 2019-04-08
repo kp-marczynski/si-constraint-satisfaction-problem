@@ -17,18 +17,16 @@ public abstract class AbstractBoard implements Board {
     }
 
     protected AbstractBoard(Board board) {
-        int size = board.getBoardSize();
-        changedFields = new ArrayList<>();
-        this.board = createEmptyBoard(size);
-        for (int rowNum = 0; rowNum < size; rowNum++) {
-            for (int colNum = 0; colNum < size; colNum++) {
-                FieldId fieldId = new FieldId(rowNum, colNum);
-                Field field = board.getFieldForCoordinates(fieldId);
-                if (field != null) {
-                    setField(fieldId, new Field(field));
-                }
-            }
-        }
+        this.board = board.getBoard();
+        this.changedFields = new ArrayList<>();
+    }
+
+    public List<List<Field>> getBoard() {
+        return this.board;
+    }
+
+    public List<FieldId> getChangedFields() {
+        return changedFields;
     }
 
     private List<List<Field>> createEmptyBoard(int size) {
@@ -60,18 +58,14 @@ public abstract class AbstractBoard implements Board {
             setField(fieldId, Field.createForSingleValue(fieldId, value));
             return true;
         } else {
-            return field.setSingleValue(value);
+            throw new IllegalStateException("Once set value cannot be changed");
         }
     }
 
     public List<Integer> getPossibleValues(FieldId fieldId) {
         Field field = getFieldForCoordinates(fieldId);
         if (field != null) {
-            if (field.getNumberOfPossibleValues() > 1) {
-                return new ArrayList<>(field.getPossibleValues());
-            } else {
-                return new ArrayList<>();
-            }
+            return new ArrayList<>();
         } else {
             List<Integer> result = getBoardDomain();
             result.removeAll(getForbiddenValues(fieldId));
@@ -105,18 +99,14 @@ public abstract class AbstractBoard implements Board {
 
     public boolean validate() {
         for (int i = 0; i < getBoardSize(); i++) {
-            List<Integer> row = getRow(i).stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList());
+            List<Integer> row = getRow(i).stream().filter(Objects::nonNull).map(Field::getValue).collect(Collectors.toList());
             int rowSize = row.size();
             if (row.stream().distinct().collect(Collectors.toList()).size() != rowSize) {
                 return false;
             }
-            List<Integer> column = getColumn(i).stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList());
+            List<Integer> column = getColumn(i).stream().filter(Objects::nonNull).map(Field::getValue).collect(Collectors.toList());
             int colSize = column.size();
             if (column.stream().distinct().collect(Collectors.toList()).size() != colSize) {
-                return false;
-            }
-
-            if (getRow(i).stream().filter(Objects::nonNull).anyMatch(Field::hasNoValues) || getColumn(i).stream().filter(Objects::nonNull).anyMatch(Field::hasNoValues)) {
                 return false;
             }
         }
@@ -128,7 +118,7 @@ public abstract class AbstractBoard implements Board {
             for (int colNum = 0; colNum < getBoardSize(); colNum++) {
                 FieldId fieldId = new FieldId(rowNum, colNum);
                 Field field = getFieldForCoordinates(fieldId);
-                if (field == null || !field.hasOneValue()) {
+                if (field == null || getPossibleValues(fieldId).size() > 0) {
                     return false;
                 }
             }
@@ -185,10 +175,10 @@ public abstract class AbstractBoard implements Board {
     private List<Integer> getForbiddenValues(FieldId fieldId) {
         List<Field> row = getRow(fieldId.getRowNum());
         row.set(fieldId.getColNum(), null);
-        List<Integer> result = row.stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList());
+        List<Integer> result = row.stream().filter(Objects::nonNull).map(Field::getValue).collect(Collectors.toList());
         List<Field> column = getColumn(fieldId.getColNum());
         column.set(fieldId.getRowNum(), null);
-        result.addAll(column.stream().filter(Objects::nonNull).filter(Field::hasOneValue).map(Field::getSingleValue).collect(Collectors.toList()));
+        result.addAll(column.stream().filter(Objects::nonNull).map(Field::getValue).collect(Collectors.toList()));
         List<Integer> collect = result.stream().distinct().collect(Collectors.toList());
         return collect;
     }

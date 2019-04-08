@@ -62,6 +62,10 @@ public class SolutionCollection {
         return fileName;
     }
 
+    public long getStartTimestamp() {
+        return startTimestamp;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -14,8 +14,6 @@ public class FifoHeuristics implements Heuristics {
                 Field field = board.getFieldForCoordinates(fieldId);
                 if (field == null) {
                     return fieldId;
-                } else if (field.getNumberOfPossibleValues() > 1) {
-                    return field.getFieldId();
                 }
             }
         }

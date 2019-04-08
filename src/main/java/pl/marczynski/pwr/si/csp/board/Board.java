@@ -24,7 +24,9 @@ public interface Board {
 
     void setField(FieldId fieldId, Field field);
 
-    void initializeNullsWithPossibleValues();
+    List<List<Field>> getBoard();
+
+    List<FieldId> getChangedFields();
 
     Board copy();
 

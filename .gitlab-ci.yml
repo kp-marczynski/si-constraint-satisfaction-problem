@@ -25,13 +25,334 @@ build:
       - .gradle
 
 
-test:
+test_futo_4_0:
   stage: test
-  script: gradle check
+  script: gradle run --args="research_data test_futo_4_0.txt"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
       - build
       - .gradle
+
+test_futo_4_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_4_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_4_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_4_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_5_0:
+  stage: test
+  script: gradle run --args="research_data test_futo_5_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_5_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_5_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_5_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_5_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_6_0:
+  stage: test
+  script: gradle run --args="research_data test_futo_6_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_6_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_6_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_6_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_6_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_7_0:
+  stage: test
+  script: gradle run --args="research_data test_futo_7_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_7_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_7_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_7_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_7_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_8_0:
+  stage: test
+  script: gradle run --args="research_data test_futo_8_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_8_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_8_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_8_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_8_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_9_0:
+  stage: test
+  script: gradle run --args="research_data test_futo_9_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_9_1:
+  stage: test
+  script: gradle run --args="research_data test_futo_9_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_futo_9_2:
+  stage: test
+  script: gradle run --args="research_data test_futo_9_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_4_0:
+  stage: test
+  script: gradle run --args="research_data test_sky_4_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_4_1:
+  stage: test
+  script: gradle run --args="research_data test_sky_4_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_4_2:
+  stage: test
+  script: gradle run --args="research_data test_sky_4_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_4_3:
+  stage: test
+  script: gradle run --args="research_data test_sky_4_3.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_4_4:
+  stage: test
+  script: gradle run --args="research_data test_sky_4_4.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_5_0:
+  stage: test
+  script: gradle run --args="research_data test_sky_5_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_5_1:
+  stage: test
+  script: gradle run --args="research_data test_sky_5_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_5_2:
+  stage: test
+  script: gradle run --args="research_data test_sky_5_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_5_3:
+  stage: test
+  script: gradle run --args="research_data test_sky_5_3.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_5_4:
+  stage: test
+  script: gradle run --args="research_data test_sky_5_4.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_6_0:
+  stage: test
+  script: gradle run --args="research_data test_sky_6_0.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_6_1:
+  stage: test
+  script: gradle run --args="research_data test_sky_6_1.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_6_2:
+  stage: test
+  script: gradle run --args="research_data test_sky_6_2.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_6_3:
+  stage: test
+  script: gradle run --args="research_data test_sky_6_3.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+test_sky_6_4:
+  stage: test
+  script: gradle run --args="research_data test_sky_6_4.txt"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
 

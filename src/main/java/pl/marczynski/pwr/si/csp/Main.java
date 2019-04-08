@@ -23,9 +23,8 @@ public class Main {
     private static final String DATA_PATH = "./src/main/resources/";
 
     public static void main(String[] args) {
-        String directory = "research_data";
-//        List<String> fileNames = getFilesInDirectory(directory);
-        List<String> fileNames = Collections.singletonList("test_futo_9_0.txt");
+        String directory = args[0];
+        List<String> fileNames = Collections.singletonList(args[1]);
         findSolutionsforFiles(directory, fileNames);
     }
 

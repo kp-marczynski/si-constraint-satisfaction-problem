@@ -52,6 +52,7 @@ public class SolutionFinder {
     public SolutionCollection findSolution() {
         long currentTime = System.currentTimeMillis();
         if (this.timeout != null && currentTime - this.solutionCollection.getStartTimestamp() > this.timeout) {
+            this.solutionCollection.timeout();
             return this.solutionCollection;
         }
         if (!this.board.validate()) {

@@ -11,6 +11,7 @@ public class SolutionCollection {
     private final String fileName;
     private final long startTimestamp;
     private long endTime;
+    private boolean isTimeoutExceeded;
 
     public SolutionCollection(String algorithmName, String heuristicsName, String fileName) {
         this.fileName = fileName;
@@ -20,6 +21,7 @@ public class SolutionCollection {
         this.solutions = new ArrayList<>();
         this.currentMoveCount = 0;
         this.startTimestamp = System.currentTimeMillis();
+        this.isTimeoutExceeded = false;
     }
 
     public void addSolution(Solution solution) {
@@ -93,5 +95,13 @@ public class SolutionCollection {
 
     public int getNumberOfSolutions() {
         return solutions.size();
+    }
+
+    public void timeout() {
+        isTimeoutExceeded = true;
+    }
+
+    public boolean isTimeoutExceeded() {
+        return this.isTimeoutExceeded;
     }
 }

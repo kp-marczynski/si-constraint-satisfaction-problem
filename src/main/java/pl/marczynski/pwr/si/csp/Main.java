@@ -11,6 +11,7 @@ import pl.marczynski.pwr.si.csp.game.solving_algorithm.BacktrackingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.ForwardCheckingAlgorithm;
 import pl.marczynski.pwr.si.csp.game.solving_algorithm.SolvingAlgorithm;
 
+import java.util.concurrent.TimeoutException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
 public class Main {
     private static final String DATA_PATH = "./src/main/resources/";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws TimeoutException {
         String directory = args[0];
         List<String> fileNames = Collections.singletonList(args[1]);
         Integer timeout = null;
@@ -31,6 +32,9 @@ public class Main {
         }
         List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames, timeout);
         System.out.println(getCsvString(solutionsForFiles));
+        if (solutionsForFiles.stream().anyMatch(solution -> solution.isTimeoutExceeded())) {
+            throw new TimeoutException();
+        }
     }
 
     public static String getCsvString(List<SolutionCollection> solutions) {

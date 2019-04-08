@@ -311,7 +311,7 @@ test_sky_5_4:
       - .gradle
 
 test_sky_6_0:
-  stage: basic-test
+  stage: extended-test
   script: gradle run --args="research_data test_sky_6_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"

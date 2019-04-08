@@ -25,7 +25,11 @@ public class Main {
     public static void main(String[] args) {
         String directory = args[0];
         List<String> fileNames = Collections.singletonList(args[1]);
-        List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames);
+        Integer timeout = null;
+        if (args.length >= 3) {
+            timeout = Integer.valueOf(args[2]);
+        }
+        List<SolutionCollection> solutionsForFiles = findSolutionsForFiles(directory, fileNames, timeout);
         System.out.println(getCsvString(solutionsForFiles));
     }
 
@@ -60,7 +64,7 @@ public class Main {
         }
     }
 
-    static List<SolutionCollection> findSolutionsForFiles(String directory, List<String> fileNames) {
+    static List<SolutionCollection> findSolutionsForFiles(String directory, List<String> fileNames, Integer timeout) {
         List<SolvingAlgorithm> solvingAlgorithms = Arrays.asList(new BacktrackingAlgorithm(), new ForwardCheckingAlgorithm());
         List<Heuristics> heuristics = Arrays.asList(new FifoHeuristics(), new IntensityHeuristics());
 
@@ -68,7 +72,7 @@ public class Main {
         for (String fileName : fileNames) {
             for (SolvingAlgorithm solvingAlgorithm : solvingAlgorithms) {
                 for (Heuristics heuristic : heuristics) {
-                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName);
+                    SolutionFinder solutionFinder = new SolutionFinder(solvingAlgorithm, heuristic, directory + "/" + fileName, timeout);
 
                     SolutionCollection solutionCollection = solutionFinder.findSolution();
                     allSolutions.add(solutionCollection);

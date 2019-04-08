@@ -32,7 +32,7 @@ build:
 
 test_futo_4_0:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_4_0.txt"
+  script: gradle run --args="research_data test_futo_4_0.txt 10000000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -42,7 +42,7 @@ test_futo_4_0:
 
 test_futo_4_1:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_4_1.txt"
+  script: gradle run --args="research_data test_futo_4_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -52,7 +52,7 @@ test_futo_4_1:
 
 test_futo_4_2:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_4_2.txt"
+  script: gradle run --args="research_data test_futo_4_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -62,7 +62,7 @@ test_futo_4_2:
 
 test_futo_5_0:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_5_0.txt"
+  script: gradle run --args="research_data test_futo_5_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -72,7 +72,7 @@ test_futo_5_0:
 
 test_futo_5_1:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_5_1.txt"
+  script: gradle run --args="research_data test_futo_5_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -82,7 +82,7 @@ test_futo_5_1:
 
 test_futo_5_2:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_5_2.txt"
+  script: gradle run --args="research_data test_futo_5_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -92,7 +92,7 @@ test_futo_5_2:
 
 test_futo_6_0:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_6_0.txt"
+  script: gradle run --args="research_data test_futo_6_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -102,7 +102,7 @@ test_futo_6_0:
 
 test_futo_6_1:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_6_1.txt"
+  script: gradle run --args="research_data test_futo_6_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -112,7 +112,7 @@ test_futo_6_1:
 
 test_futo_6_2:
   stage: basic-test
-  script: gradle run --args="research_data test_futo_6_2.txt"
+  script: gradle run --args="research_data test_futo_6_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -122,7 +122,7 @@ test_futo_6_2:
 
 test_futo_7_0:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_7_0.txt"
+  script: gradle run --args="research_data test_futo_7_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -132,7 +132,7 @@ test_futo_7_0:
 
 test_futo_7_1:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_7_1.txt"
+  script: gradle run --args="research_data test_futo_7_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -142,7 +142,7 @@ test_futo_7_1:
 
 test_futo_7_2:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_7_2.txt"
+  script: gradle run --args="research_data test_futo_7_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -152,7 +152,7 @@ test_futo_7_2:
 
 test_futo_8_0:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_8_0.txt"
+  script: gradle run --args="research_data test_futo_8_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -162,7 +162,7 @@ test_futo_8_0:
 
 test_futo_8_1:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_8_1.txt"
+  script: gradle run --args="research_data test_futo_8_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -172,7 +172,7 @@ test_futo_8_1:
 
 test_futo_8_2:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_8_2.txt"
+  script: gradle run --args="research_data test_futo_8_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -182,7 +182,7 @@ test_futo_8_2:
 
 test_futo_9_0:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_9_0.txt"
+  script: gradle run --args="research_data test_futo_9_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -192,7 +192,7 @@ test_futo_9_0:
 
 test_futo_9_1:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_9_1.txt"
+  script: gradle run --args="research_data test_futo_9_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -202,7 +202,7 @@ test_futo_9_1:
 
 test_futo_9_2:
   stage: extended-test
-  script: gradle run --args="research_data test_futo_9_2.txt"
+  script: gradle run --args="research_data test_futo_9_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -212,7 +212,7 @@ test_futo_9_2:
 
 test_sky_4_0:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_4_0.txt"
+  script: gradle run --args="research_data test_sky_4_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -222,7 +222,7 @@ test_sky_4_0:
 
 test_sky_4_1:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_4_1.txt"
+  script: gradle run --args="research_data test_sky_4_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -232,7 +232,7 @@ test_sky_4_1:
 
 test_sky_4_2:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_4_2.txt"
+  script: gradle run --args="research_data test_sky_4_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -242,7 +242,7 @@ test_sky_4_2:
 
 test_sky_4_3:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_4_3.txt"
+  script: gradle run --args="research_data test_sky_4_3.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -252,7 +252,7 @@ test_sky_4_3:
 
 test_sky_4_4:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_4_4.txt"
+  script: gradle run --args="research_data test_sky_4_4.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -262,7 +262,7 @@ test_sky_4_4:
 
 test_sky_5_0:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_5_0.txt"
+  script: gradle run --args="research_data test_sky_5_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -272,7 +272,7 @@ test_sky_5_0:
 
 test_sky_5_1:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_5_1.txt"
+  script: gradle run --args="research_data test_sky_5_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -282,7 +282,7 @@ test_sky_5_1:
 
 test_sky_5_2:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_5_2.txt"
+  script: gradle run --args="research_data test_sky_5_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -292,7 +292,7 @@ test_sky_5_2:
 
 test_sky_5_3:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_5_3.txt"
+  script: gradle run --args="research_data test_sky_5_3.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -302,7 +302,7 @@ test_sky_5_3:
 
 test_sky_5_4:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_5_4.txt"
+  script: gradle run --args="research_data test_sky_5_4.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -312,7 +312,7 @@ test_sky_5_4:
 
 test_sky_6_0:
   stage: basic-test
-  script: gradle run --args="research_data test_sky_6_0.txt"
+  script: gradle run --args="research_data test_sky_6_0.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -322,7 +322,7 @@ test_sky_6_0:
 
 test_sky_6_1:
   stage: extended-test
-  script: gradle run --args="research_data test_sky_6_1.txt"
+  script: gradle run --args="research_data test_sky_6_1.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -332,7 +332,7 @@ test_sky_6_1:
 
 test_sky_6_2:
   stage: extended-test
-  script: gradle run --args="research_data test_sky_6_2.txt"
+  script: gradle run --args="research_data test_sky_6_2.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -342,7 +342,7 @@ test_sky_6_2:
 
 test_sky_6_3:
   stage: extended-test
-  script: gradle run --args="research_data test_sky_6_3.txt"
+  script: gradle run --args="research_data test_sky_6_3.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -352,7 +352,7 @@ test_sky_6_3:
 
 test_sky_6_4:
   stage: extended-test
-  script: gradle run --args="research_data test_sky_6_4.txt"
+  script: gradle run --args="research_data test_sky_6_4.txt 1800000"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull

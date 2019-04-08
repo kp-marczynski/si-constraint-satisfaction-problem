@@ -15,12 +15,14 @@ public class SolutionFinder {
     private final Heuristics heuristics;
     private Board board;
     private final SolutionCollection solutionCollection;
+    private final Integer timeout;
 
-    public SolutionFinder(SolvingAlgorithm solvingAlgorithm, Heuristics heuristics, String fileName) {
+    public SolutionFinder(SolvingAlgorithm solvingAlgorithm, Heuristics heuristics, String fileName, Integer timeout) {
         this.solvingAlgorithm = solvingAlgorithm;
         this.heuristics = heuristics;
         this.board = solvingAlgorithm.initializeBoard(fileName);
         this.solutionCollection = new SolutionCollection(solvingAlgorithm.getAlgorithmName(), heuristics.getHeuristicsName(), fileName);
+        this.timeout = timeout;
         initializeRoot();
     }
 
@@ -29,6 +31,7 @@ public class SolutionFinder {
         this.heuristics = parent.heuristics;
         this.board = parent.board.copy();
         this.solutionCollection = parent.solutionCollection;
+        this.timeout = parent.timeout;
 
         solvingAlgorithm.makeMove(this.board, parent.currentRoot, parentRootValue);
         this.solutionCollection.increaseMoveCount();
@@ -48,7 +51,7 @@ public class SolutionFinder {
 
     public SolutionCollection findSolution() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - this.solutionCollection.getStartTimestamp() > 18e5) {
+        if (this.timeout != null && currentTime - this.solutionCollection.getStartTimestamp() > this.timeout) {
             return this.solutionCollection;
         }
         if (!this.board.validate()) {
